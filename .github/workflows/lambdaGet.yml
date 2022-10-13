@@ -11,24 +11,39 @@ jobs:
         node-version: [16.x]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v3
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-      - name: npm install and build
-      - run: 
-          cd lambdaGet && npm ci
-      - run: 
-          cd lambdaPost && npm ci
-      - run:
-          cd lambdaPut && npm ci
-      - run:
-          cd lambdaDelete && npm ci
-      - name: zip
-        uses: montudor/action-zip@v0.1.0
+      - name: lambdaGet npm ci
+        run: 
+            cd lambdaGet && npm ci
+      - name: lambdaPost npm ci
+        run: 
+            cd lambdaPost && npm ci
+      - name: lambdaPut npm ci
+        run:
+            cd lambdaPut && npm ci
+      - name: lambdaDelete npm ci
+        run:
+            cd lambdaDelete && npm ci
+      - name: zip lambdaGet
+        uses: montudor/action-zip@v1
         with:
           args: zip -qq -r lambdaGet.zip lambdaGet
+      - name: zip lambdaPost
+        uses: montudor/action-zip@v1
+        with:
+          args: zip -qq -r lambdaPost.zip lambdaPost
+      - name: zip lambdaPut
+        uses: montudor/action-zip@v1
+        with:
+          args: zip -qq -r lambdaPut.zip lambdaPut
+      - name: zip lambdaDelete
+        uses: montudor/action-zip@v1
+        with:
+          args: zip -qq -r lambdaDelete.zip lambdaDelete
       - name: deploy GET
         uses: appleboy/lambda-action@master
         with:
@@ -43,7 +58,7 @@ jobs:
           aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws_region: us-west-2
-          function_name: lambdaGet
+          function_name: lambdaPost
           zip_file: lambdaPost.zip
       - name: deploy PUT
         uses: appleboy/lambda-action@master
@@ -51,7 +66,7 @@ jobs:
           aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws_region: us-west-2
-          function_name: lambdaGet
+          function_name: lambdaPut
           zip_file: lambdaPut.zip
       - name: deploy DELETE
         uses: appleboy/lambda-action@master
@@ -59,5 +74,5 @@ jobs:
           aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws_region: us-west-2
-          function_name: lambdaGet
+          function_name: lambdaDelete
           zip_file: lambdaDelete.zip

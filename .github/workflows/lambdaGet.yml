@@ -31,11 +31,11 @@ jobs:
       - name: zip lambdaGet
         uses: montudor/action-zip@v1
         with:
-          args: zip -qq -r lambdaGet.zip ./
+          args: zip -r lambdaGet.zip ./
       - name: zip lambdaPost
         uses: montudor/action-zip@v1
         with:
-          args: zip -qq -r lambdaPost.zip ./lambdaPost/lambdaPost
+          args: zip -r lambdaPost.zip ./lambdaPost/
       - name: zip lambdaPut
         uses: montudor/action-zip@v1
         with:

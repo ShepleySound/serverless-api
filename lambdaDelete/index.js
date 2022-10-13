@@ -11,10 +11,9 @@ exports.handler =  async function(event, context) {
     await dynamo.delete({
       TableName: 'customers',
       Key: {
-        id: event.pathParameters.id,
+        customerid: event.pathParameters.id,
       }
     }).promise();
-    body = `Updated customer ${request.id}`
   } catch(error) {
     console.log(error);
     statusCode = 400;

@@ -13,7 +13,7 @@ exports.handler =  async function(event, context) {
       .get({
         TableName: 'customers',
         Key: {
-          id: event.pathParameters.id
+          customerid: event.pathParameters.id
         }
       })
       .promise();
@@ -25,7 +25,7 @@ exports.handler =  async function(event, context) {
     statusCode = 400;
     body = error.message;
   } finally {
-    body = JSON.stringify(body)
+    body = JSON.stringify(body);
   }
   return { statusCode, body, headers }
 }

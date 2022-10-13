@@ -6,26 +6,26 @@ exports.handler =  async function(event, context) {
   let statusCode = 200;
   let headers = {
     "Content-Type": "application/json"
-  }
+  };
   try {
     let request = JSON.parse(event.body);
     await dynamo
-    .post({
+    .put({
       TableName: 'customers',
       Item: {
-        id: request.id,
+        customerid: request.customerid,
         name: request.name,
         purchaseCount: request.purchaseCount,
       }
     })
     .promise();
+  body = `Created customer ${request.customerid}`;
   } catch(error) {
     console.log(error);
     statusCode = 400;
     body = error.message;
   } finally {
-    body = JSON.stringify(body)
+    body = JSON.stringify(body);
   }
-  body = `Created customer ${request.id}`
-  return { statusCode, body, headers }
-}
+  return { statusCode, body, headers };
+};

@@ -1,12 +1,12 @@
-GET https://vo26vdx2l7.execute-api.us-west-2.amazonaws.com/customers
+GET https://vo26vdx2l7.execute-api.us-west-2.amazonaws.com/customers/123d45 HTTP/1.1
 
 ###
 
-POST https://vo26vdx2l7.execute-api.us-west-2.amazonaws.com/customers
+POST https://vo26vdx2l7.execute-api.us-west-2.amazonaws.com/customers HTTP/1.1
 content-type: application/json
 
 {
-  "id": 12345
   "name": "Robert",
+  "customerid": "123d45",
   "purchaseCount": 20
 }

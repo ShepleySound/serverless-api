@@ -12,7 +12,7 @@ exports.handler =  async function(event, context) {
       }
     }).promise();
   } else {
-    body = await dynamo.scan({ TableName: 'customers '}).promise();
+    body = await dynamo.scan({ TableName: 'customers' }).promise();
   }
   return { statusCode, body }
 }

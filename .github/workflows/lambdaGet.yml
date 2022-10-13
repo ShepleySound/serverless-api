@@ -3,11 +3,9 @@ on:
   push:
     branches:
       - main
-    paths:
-      - lambdaGet/**
 jobs:
   deploy_source:
-    name: build and deploy GET lambda function
+    name: build and deploy lambda functions
     strategy:
       matrix:
         node-version: [16.x]
@@ -19,15 +17,19 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - name: npm install and build
-        run: 
+      - run: 
           cd lambdaGet && npm ci
-        env:
-          CI: true
+      - run: 
+          cd lambdaPost && npm ci
+      - run:
+          cd lambdaPut && npm ci
+      - run:
+          cd lambdaDelete && npm ci
       - name: zip
         uses: montudor/action-zip@v0.1.0
         with:
           args: zip -qq -r lambdaGet.zip lambdaGet
-      - name: default deploy
+      - name: deploy GET
         uses: appleboy/lambda-action@master
         with:
           aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -35,3 +37,27 @@ jobs:
           aws_region: us-west-2
           function_name: lambdaGet
           zip_file: lambdaGet.zip
+      - name: deploy POST
+        uses: appleboy/lambda-action@master
+        with:
+          aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws_region: us-west-2
+          function_name: lambdaGet
+          zip_file: lambdaPost.zip
+      - name: deploy PUT
+        uses: appleboy/lambda-action@master
+        with:
+          aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws_region: us-west-2
+          function_name: lambdaGet
+          zip_file: lambdaPut.zip
+      - name: deploy DELETE
+        uses: appleboy/lambda-action@master
+        with:
+          aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws_region: us-west-2
+          function_name: lambdaGet
+          zip_file: lambdaDelete.zip

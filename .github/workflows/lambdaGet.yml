@@ -18,32 +18,32 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - name: lambdaGet npm ci
         run: 
-            cd lambdaGet && npm ci
+            cd lambdaGet && npm ci && zip deployment.zip .
       - name: lambdaPost npm ci
         run: 
-            cd lambdaPost && npm ci
+            cd lambdaPost && npm ci && zip deployment.zip .
       - name: lambdaPut npm ci
         run:
-            cd lambdaPut && npm ci
+            cd lambdaPut && npm ci && zip deployment.zip .
       - name: lambdaDelete npm ci
         run:
-            cd lambdaDelete && npm ci
-      - name: zip lambdaGet
-        uses: montudor/action-zip@v1
-        with:
-          args: zip -qq -j -r lambdaGet.zip lambdaGet/.
-      - name: zip lambdaPost
-        uses: montudor/action-zip@v1
-        with:
-          args: zip -qq -j -r lambdaPost.zip lambdaPost/.
-      - name: zip lambdaPut
-        uses: montudor/action-zip@v1
-        with:
-          args: zip -qq -j -r lambdaPut.zip lambdaPut/.
-      - name: zip lambdaDelete
-        uses: montudor/action-zip@v1
-        with:
-          args: zip -qq -j -r lambdaDelete.zip lambdaDelete/.
+            cd lambdaDelete && npm ci && zip deployment.zip .
+#       - name: zip lambdaGet
+#         uses: montudor/action-zip@v1
+#         with:
+#           args: zip -qq -j -r lambdaGet.zip lambdaGet/.
+#       - name: zip lambdaPost
+#         uses: montudor/action-zip@v1
+#         with:
+#           args: zip -qq -j -r lambdaPost.zip lambdaPost/.
+#       - name: zip lambdaPut
+#         uses: montudor/action-zip@v1
+#         with:
+#           args: zip -qq -j -r lambdaPut.zip lambdaPut/.
+#       - name: zip lambdaDelete
+#         uses: montudor/action-zip@v1
+#         with:
+#           args: zip -qq -j -r lambdaDelete.zip lambdaDelete/.
       - name: deploy GET
         uses: appleboy/lambda-action@master
         with:
@@ -51,7 +51,7 @@ jobs:
           aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws_region: us-west-2
           function_name: lambdaGet
-          zip_file: lambdaGet.zip
+          zip_file: lambdaGet/deployment.zip
       - name: deploy POST
         uses: appleboy/lambda-action@master
         with:
@@ -59,7 +59,7 @@ jobs:
           aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws_region: us-west-2
           function_name: lambdaPost
-          zip_file: lambdaPost.zip
+          zip_file: lambdaPost/deployment.zip
       - name: deploy PUT
         uses: appleboy/lambda-action@master
         with:
@@ -67,7 +67,7 @@ jobs:
           aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws_region: us-west-2
           function_name: lambdaPut
-          zip_file: lambdaPut.zip
+          zip_file: lambdaPut/deployment.zip
       - name: deploy DELETE
         uses: appleboy/lambda-action@master
         with:
@@ -75,4 +75,4 @@ jobs:
           aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws_region: us-west-2
           function_name: lambdaDelete
-          zip_file: lambdaDelete.zip
+          zip_file: lambdaDelete/deployment.zip

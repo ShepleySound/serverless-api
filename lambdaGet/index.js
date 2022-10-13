@@ -1,3 +1,3 @@
 'use strict';
 
-console.log('initialized 5')
+console.log('initialized 6')

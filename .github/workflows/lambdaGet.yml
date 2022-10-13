@@ -18,16 +18,16 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - name: lambdaGet npm ci
         run: 
-            cd lambdaGet && npm ci && zip deployment.zip .
+            cd lambdaGet && npm ci && zip -r deployment.zip .
       - name: lambdaPost npm ci
         run: 
-            cd lambdaPost && npm ci && zip deployment.zip .
+            cd lambdaPost && npm ci && zip -r deployment.zip .
       - name: lambdaPut npm ci
         run:
-            cd lambdaPut && npm ci && zip deployment.zip .
+            cd lambdaPut && npm ci && zip -r deployment.zip .
       - name: lambdaDelete npm ci
         run:
-            cd lambdaDelete && npm ci && zip deployment.zip .
+            cd lambdaDelete && npm ci && zip -r deployment.zip .
 #       - name: zip lambdaGet
 #         uses: montudor/action-zip@v1
 #         with:

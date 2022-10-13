@@ -31,19 +31,19 @@ jobs:
       - name: zip lambdaGet
         uses: montudor/action-zip@v1
         with:
-          args: zip -r lambdaGet.zip ./
+          args: zip -qq -j -r lambdaGet.zip lambdaGet/.
       - name: zip lambdaPost
         uses: montudor/action-zip@v1
         with:
-          args: zip -r lambdaPost.zip ./lambdaPost/
+          args: zip -qq -j -r lambdaPost.zip lambdaPost/.
       - name: zip lambdaPut
         uses: montudor/action-zip@v1
         with:
-          args: zip -qq -r lambdaPut.zip lambdaPut/
+          args: zip -qq -j -r lambdaPut.zip lambdaPut/.
       - name: zip lambdaDelete
         uses: montudor/action-zip@v1
         with:
-          args: zip -qq -r lambdaDelete.zip lambdaDelete/.
+          args: zip -qq -j -r lambdaDelete.zip lambdaDelete/.
       - name: deploy GET
         uses: appleboy/lambda-action@master
         with:
